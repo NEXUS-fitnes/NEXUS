@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nexus Fitness · Gimnasio, tienda y masajes en una sola app</title>
+<meta name="description" content="Entrá con tu código QR, seguí tu rutina del día, pedí tu batido y reservá tu masaje desde una sola app.">
+<meta name="theme-color" content="#0d1117">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=Manrope:wght@400..800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<div class="app">
+  <nav class="side" aria-label="Navegación principal">
+    <a class="brand" href="#/acceso" aria-label="Nexus Fitness, ir al inicio">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">Nexus<small>Fitness</small></span>
+    </a>
+    <ul class="nav">
+      <li><a href="#/acceso" data-nav="acceso" style="--acc:var(--teal)"><i aria-hidden="true">🎟️</i><span>Acceso</span></a></li>
+      <li><a href="#/rutina" data-nav="rutina" style="--acc:var(--orange)"><i aria-hidden="true">🏋️</i><span>Mi rutina</span></a></li>
+      <li><a href="#/tienda" data-nav="tienda" style="--acc:var(--purple)"><i aria-hidden="true">🥤</i><span>Tienda</span></a></li>
+      <li><a href="#/masajes" data-nav="masajes" style="--acc:var(--green)"><i aria-hidden="true">💆</i><span>Masajes</span></a></li>
+      <li><a href="#/ficha" data-nav="ficha" style="--acc:var(--sky)"><i aria-hidden="true">📊</i><span>Mi ficha</span></a></li>
+    </ul>
+    <div class="who" id="who" hidden>
+      <span class="who-av" id="whoAv" aria-hidden="true"></span>
+      <span class="who-txt"><strong id="whoName"></strong><small id="whoId"></small></span>
+    </div>
+  </nav>
+
+  <main id="main">
+
+    <!-- ACCESO -->
+    <section class="view t-acceso" data-view="acceso" hidden>
+      <header class="vhead">
+        <h1 id="greet">Tu entrada, en el celular</h1>
+        <p>Abrí tu código, acercalo al molinete y entrá sin pasar por recepción.</p>
+      </header>
+
+      <div class="acceso-grid">
+        <article class="qrcard" aria-labelledby="qrTitle">
+          <h2 id="qrTitle" class="sr-only">Tu código QR de acceso</h2>
+          <div class="qr-wrap">
+            <svg class="ring" viewBox="0 0 100 100" aria-hidden="true">
+              <circle class="ring-bg" cx="50" cy="50" r="46"/>
+              <circle class="ring-fg" id="ringFg" cx="50" cy="50" r="46" transform="rotate(-90 50 50)"/>
+            </svg>
+            <div class="qr" id="qr"></div>
+          </div>
+          <div class="qr-meta">
+            <strong id="qrName">—</strong>
+            <span id="qrId">—</span>
+            <span class="qr-timer" id="qrTimer" role="timer">Generando…</span>
+          </div>
+          <p class="qr-note">Personal e intransferible. Cambia cada 30 segundos y sirve una sola vez.</p>
+          <div class="row">
+            <button class="btn ghost" id="copyToken" type="button">Copiar código</button>
+            <button class="btn ghost" id="dlQr" type="button">Descargar QR</button>
+          </div>
+        </article>
+
+        <article class="gate-card" aria-labelledby="gateTitle">
+          <h2 id="gateTitle">Molinete de entrada</h2>
+          <p class="muted">Probá el acceso acá mismo: escaneá con la cámara o pegá el código de tu QR.</p>
+          <div class="gate" id="gate" data-state="idle">
+            <div class="gate-body">
+              <div class="gate-light" aria-hidden="true"></div>
+              <div class="gate-arms" aria-hidden="true"><i></i><i></i><i></i></div>
+            </div>
+            <p class="gate-msg" id="gateMsg" role="status">Esperando código…</p>
+          </div>
+          <video id="cam" class="cam" playsinline muted hidden></video>
+          <div class="gate-form">
+            <label class="field">
+              <span>Código leído</span>
+              <input id="gateInput" type="text" autocomplete="off" spellcheck="false" placeholder="NEXUS.NX-XXXXXX.…">
+            </label>
+            <div class="row">
+              <button class="btn" id="gateGo" type="button">Validar código</button>
+              <button class="btn ghost" id="gateMine" type="button">Usar mi QR actual</button>
+              <button class="btn ghost" id="gateCam" type="button">Escanear con cámara</button>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <h2 class="sec-title">Tres servicios, una sola cuenta</h2>
+      <div class="areas" id="areas"></div>
+
+      <h2 class="sec-title">Así es un día en Nexus</h2>
+      <ol class="flow">
+        <li><b>Llegás y abrís la app</b><span>Tu QR dinámico ya está listo.</span></li>
+        <li><b>Pasás por el molinete</b><span>Acceso autónomo, sin cola en recepción.</span></li>
+        <li><b>Seguís tu rutina de hoy</b><span>Tildás ejercicios y registrás tus pesos.</span></li>
+        <li><b>Terminás y la app te sugiere</b><span>Masaje de descarga, batido o suplemento con descuento.</span></li>
+        <li><b>Todo queda en tu ficha</b><span>Asistencias, rutinas, compras y turnos en un solo lugar.</span></li>
+      </ol>
+    </section>
+
+    <!-- RUTINA -->
+    <section class="view t-rutina" data-view="rutina" hidden>
+      <header class="vhead">
+        <h1>Tu rutina de hoy</h1>
+        <p id="rutinaSub">Elegí el día, registrá tus pesos y tildá cada ejercicio.</p>
+      </header>
+      <div id="rutinaBody"></div>
+    </section>
+
+    <!-- TIENDA -->
+    <section class="view t-tienda" data-view="tienda" hidden>
+      <header class="vhead vhead-row">
+        <div>
+          <h1>Tienda y Protein Bar</h1>
+          <p>10% de descuento por ser socio. Retirás al salir o pedís tu batido para cuando termines.</p>
+        </div>
+        <button class="btn solid" id="openCart" type="button">Mi pedido <span class="badge" id="cartCount">0</span></button>
+      </header>
+      <div class="tabs" role="tablist" id="tiendaTabs"></div>
+      <div class="grid-products" id="products"></div>
+      <h2 class="sec-title">Mis pedidos</h2>
+      <div id="orders"></div>
+    </section>
+
+    <!-- MASAJES -->
+    <section class="view t-masajes" data-view="masajes" hidden>
+      <header class="vhead">
+        <h1>Reservá tu masaje</h1>
+        <p>Elegí el tipo, el profesional y el horario. Te avisamos antes de tu turno.</p>
+      </header>
+      <div class="masaje-grid">
+        <div id="masajeBuilder"></div>
+        <aside>
+          <h2 class="sec-title first">Mis turnos</h2>
+          <div id="bookings"></div>
+          <button class="btn ghost" id="enableNotif" type="button">Activar avisos en este dispositivo</button>
+        </aside>
+      </div>
+    </section>
+
+    <!-- FICHA -->
+    <section class="view t-ficha" data-view="ficha" hidden>
+      <header class="vhead">
+        <h1>Mi ficha digital</h1>
+        <p>Asistencias, rutinas, compras y turnos, todo en el mismo perfil.</p>
+      </header>
+      <div id="fichaBody"></div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Onboarding / evaluación diagnóstica -->
+<dialog id="onboard" aria-labelledby="obTitle">
+  <form id="obForm" class="dlg">
+    <h2 id="obTitle">Bienvenido a Nexus Fitness</h2>
+    <p class="muted">Contanos tu objetivo y la app arma tu plan de entrenamiento.</p>
+    <label class="field">
+      <span>Tu nombre</span>
+      <input id="obName" type="text" required maxlength="40" autocomplete="given-name" placeholder="Ej: Agus">
+    </label>
+    <fieldset class="goals">
+      <legend>Tu objetivo principal</legend>
+      <label class="goal"><input type="radio" name="goal" value="musculo" checked><span><b>Ganar músculo</b><small>4 series de 8 a 10 repeticiones</small></span></label>
+      <label class="goal"><input type="radio" name="goal" value="grasa"><span><b>Perder grasa</b><small>Series largas y cardio final</small></span></label>
+      <label class="goal"><input type="radio" name="goal" value="rendimiento"><span><b>Mejorar rendimiento</b><small>Fuerza base, series de 5</small></span></label>
+    </fieldset>
+    <div class="row end">
+      <button class="btn" type="button" id="obCancel" hidden>Cancelar</button>
+      <button class="btn solid" type="submit">Crear mi perfil</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Carrito -->
+<dialog id="cartDlg" aria-labelledby="cartTitle">
+  <div class="dlg">
+    <h2 id="cartTitle">Mi pedido</h2>
+    <div id="cartBody"></div>
+    <div class="row end">
+      <button class="btn ghost" type="button" id="cartClose">Seguir mirando</button>
+      <button class="btn solid" type="button" id="cartConfirm">Confirmar pedido</button>
+    </div>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="js/qrcode.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
